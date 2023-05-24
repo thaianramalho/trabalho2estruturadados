@@ -2,16 +2,20 @@
 #include <stdlib.h>
 #include <time.h>
 
-void selectionSort(int arr[], int n, int* comparacoes, int* trocas) {
-    int i, j, indiceMinimo, temp;
-    for (i = 0; i < n-1; i++) {
+void selectionSort(long int arr[], long int n, long int *comparacoes, long int *trocas)
+{
+    long int i, j, indiceMinimo, temp;
+    for (i = 0; i < n - 1; i++)
+    {
         indiceMinimo = i;
-        for (j = i+1; j < n; j++) {
+        for (j = i + 1; j < n; j++)
+        {
             (*comparacoes)++;
             if (arr[j] < arr[indiceMinimo])
                 indiceMinimo = j;
         }
-        if (indiceMinimo != i) {
+        if (indiceMinimo != i)
+        {
             (*trocas)++;
             temp = arr[i];
             arr[i] = arr[indiceMinimo];
@@ -20,13 +24,16 @@ void selectionSort(int arr[], int n, int* comparacoes, int* trocas) {
     }
 }
 
-void insertionSort(int arr[], int n, int* comparacoes, int* trocas) {
-    int i, chave, j;
-    for (i = 1; i < n; i++) {
+void insertionSort(long int arr[], long int n, long int *comparacoes, long int *trocas)
+{
+    long int i, chave, j;
+    for (i = 1; i < n; i++)
+    {
         chave = arr[i];
         j = i - 1;
         (*comparacoes)++;
-        while (j >= 0 && arr[j] > chave) {
+        while (j >= 0 && arr[j] > chave)
+        {
             (*comparacoes)++;
             (*trocas)++;
             arr[j + 1] = arr[j];
@@ -36,14 +43,18 @@ void insertionSort(int arr[], int n, int* comparacoes, int* trocas) {
     }
 }
 
-void bubbleSort(int arr[], int n, int* comparacoes, int* trocas) {
-    int i, j, temp;
-    int trocou;
-    for (i = 0; i < n - 1; i++) {
+void bubbleSort(long int arr[], long int n, long int *comparacoes, long int *trocas)
+{
+    long int i, j, temp;
+    long int trocou;
+    for (i = 0; i < n - 1; i++)
+    {
         trocou = 0;
-        for (j = 0; j < n - i - 1; j++) {
+        for (j = 0; j < n - i - 1; j++)
+        {
             (*comparacoes)++;
-            if (arr[j] > arr[j + 1]) {
+            if (arr[j] > arr[j + 1])
+            {
                 (*trocas)++;
                 temp = arr[j];
                 arr[j] = arr[j + 1];
@@ -56,14 +67,18 @@ void bubbleSort(int arr[], int n, int* comparacoes, int* trocas) {
     }
 }
 
-void shellSort(int arr[], int n, int* comparacoes, int* trocas) {
-    int i, j, temp, intervalo;
-    for (intervalo = n/2; intervalo > 0; intervalo /= 2) {
-        for (i = intervalo; i < n; i++) {
+void shellSort(long int arr[], long int n, long int *comparacoes, long int *trocas)
+{
+    long int i, j, temp, intervalo;
+    for (intervalo = n / 2; intervalo > 0; intervalo /= 2)
+    {
+        for (i = intervalo; i < n; i++)
+        {
             temp = arr[i];
             j = i;
             (*comparacoes)++;
-            while (j >= intervalo && arr[j - intervalo] > temp) {
+            while (j >= intervalo && arr[j - intervalo] > temp)
+            {
                 (*comparacoes)++;
                 (*trocas)++;
                 arr[j] = arr[j - intervalo];
@@ -74,13 +89,16 @@ void shellSort(int arr[], int n, int* comparacoes, int* trocas) {
     }
 }
 
-int particao(int arr[], int baixo, int alto, int* comparacoes, int* trocas) {
-    int pivo = arr[alto];
-    int i = (baixo - 1);
-    int j, temp;
-    for (j = baixo; j <= alto - 1; j++) {
+long int particao(long int arr[], long int baixo, long int alto, long int *comparacoes, long int *trocas)
+{
+    long int pivo = arr[alto];
+    long int i = (baixo - 1);
+    long int j, temp;
+    for (j = baixo; j <= alto - 1; j++)
+    {
         (*comparacoes)++;
-        if (arr[j] < pivo) {
+        if (arr[j] < pivo)
+        {
             i++;
             (*trocas)++;
             temp = arr[i];
@@ -95,25 +113,29 @@ int particao(int arr[], int baixo, int alto, int* comparacoes, int* trocas) {
     return (i + 1);
 }
 
-void quickSort(int arr[], int baixo, int alto, int* comparacoes, int* trocas) {
-    if (baixo < alto) {
-        int pi = particao(arr, baixo, alto, comparacoes, trocas);
+void quickSort(long int arr[], long int baixo, long int alto, long int *comparacoes, long int *trocas)
+{
+    if (baixo < alto)
+    {
+        long int pi = particao(arr, baixo, alto, comparacoes, trocas);
         quickSort(arr, baixo, pi - 1, comparacoes, trocas);
         quickSort(arr, pi + 1, alto, comparacoes, trocas);
     }
 }
 
-void heapify(int arr[], int n, int i, int* comparacoes, int* trocas) {
-    int maior = i;
-    int esquerda = 2 * i + 1;
-    int direita = 2 * i + 2;
-    int temp;
+void heapify(long int arr[], long int n, long int i, long int *comparacoes, long int *trocas)
+{
+    long int maior = i;
+    long int esquerda = 2 * i + 1;
+    long int direita = 2 * i + 2;
+    long int temp;
     if (esquerda < n && arr[esquerda] > arr[maior])
         maior = esquerda;
     if (direita < n && arr[direita] > arr[maior])
         maior = direita;
     (*comparacoes)++;
-    if (maior != i) {
+    if (maior != i)
+    {
         (*trocas)++;
         temp = arr[i];
         arr[i] = arr[maior];
@@ -122,11 +144,13 @@ void heapify(int arr[], int n, int i, int* comparacoes, int* trocas) {
     }
 }
 
-void heapSort(int arr[], int n, int* comparacoes, int* trocas) {
-    int i, temp;
+void heapSort(long int arr[], long int n, long int *comparacoes, long int *trocas)
+{
+    long int i, temp;
     for (i = n / 2 - 1; i >= 0; i--)
         heapify(arr, n, i, comparacoes, trocas);
-    for (i = n - 1; i >= 0; i--) {
+    for (i = n - 1; i >= 0; i--)
+    {
         (*trocas)++;
         temp = arr[0];
         arr[0] = arr[i];
@@ -135,11 +159,12 @@ void heapSort(int arr[], int n, int* comparacoes, int* trocas) {
     }
 }
 
-void merge(int arr[], int esquerda, int meio, int direita, int* comparacoes, int* trocas) {
-    int i, j, k;
-    int n1 = meio - esquerda + 1;
-    int n2 = direita - meio;
-    int L[n1], R[n2];
+void merge(long int arr[], long int esquerda, long int meio, long int direita, long int *comparacoes, long int *trocas)
+{
+    long int i, j, k;
+    long int n1 = meio - esquerda + 1;
+    long int n2 = direita - meio;
+    long int L[n1], R[n2];
     for (i = 0; i < n1; i++)
         L[i] = arr[esquerda + i];
     for (j = 0; j < n2; j++)
@@ -147,26 +172,32 @@ void merge(int arr[], int esquerda, int meio, int direita, int* comparacoes, int
     i = 0;
     j = 0;
     k = esquerda;
-    while (i < n1 && j < n2) {
+    while (i < n1 && j < n2)
+    {
         (*comparacoes)++;
-        if (L[i] <= R[j]) {
+        if (L[i] <= R[j])
+        {
             (*trocas)++;
             arr[k] = L[i];
             i++;
-        } else {
+        }
+        else
+        {
             (*trocas)++;
             arr[k] = R[j];
             j++;
         }
         k++;
     }
-    while (i < n1) {
+    while (i < n1)
+    {
         (*trocas)++;
         arr[k] = L[i];
         i++;
         k++;
     }
-    while (j < n2) {
+    while (j < n2)
+    {
         (*trocas)++;
         arr[k] = R[j];
         j++;
@@ -174,53 +205,59 @@ void merge(int arr[], int esquerda, int meio, int direita, int* comparacoes, int
     }
 }
 
-void mergeSort(int arr[], int esquerda, int direita, int* comparacoes, int* trocas) {
-    if (esquerda < direita) {
-        int meio = esquerda + (direita - esquerda) / 2;
+void mergeSort(long int arr[], long int esquerda, long int direita, long int *comparacoes, long int *trocas)
+{
+    if (esquerda < direita)
+    {
+        long int meio = esquerda + (direita - esquerda) / 2;
         mergeSort(arr, esquerda, meio, comparacoes, trocas);
         mergeSort(arr, meio + 1, direita, comparacoes, trocas);
         merge(arr, esquerda, meio, direita, comparacoes, trocas);
     }
 }
 
-void imprimirArray(int arr[], int n) {
-    int i;
+void imprimirArray(long int arr[], long int n)
+{
+    long int i;
     for (i = 0; i < n; i++)
-        printf("%d ", arr[i]);
+        printf("%ld ", arr[i]);
     printf("\n");
 }
 
-void gerarArrayAleatorio(int arr[], int n) {
-    int i;
+void gerarArrayAleatorio(long int arr[], long int n)
+{
+    long int i;
     for (i = 0; i < n; i++)
         arr[i] = rand() % 100;
 }
 
-int main() {
+long int main()
+{
     srand(time(0));
 
-    int tamanhos[] = {1000, 10000, 100000, 200000};
-    int numTamanhos = sizeof(tamanhos) / sizeof(tamanhos[0]);
+    long int tamanhos[] = {1000, 10000, 100000, 200000};
+    long int numTamanhos = sizeof(tamanhos) / sizeof(tamanhos[0]);
 
-    int i, j;
-    for (i = 0; i < numTamanhos; i++) {
-        int tamanho = tamanhos[i];
-        int* vetorOriginal = (int*)malloc(tamanho * sizeof(int));
-        int* copiaVetor = (int*)malloc(tamanho * sizeof(int));
+    long int i, j;
+    for (i = 0; i < numTamanhos; i++)
+    {
+        long int tamanho = tamanhos[i];
+        long int *vetorOriginal = (long int *)malloc(tamanho * sizeof(long int));
+        long int *copiaVetor = (long int *)malloc(tamanho * sizeof(long int));
 
         gerarArrayAleatorio(vetorOriginal, tamanho);
 
-        printf("Tamanho do vetor: %d\n", tamanho);
+        printf("# # # # # Tamanho do vetor: %ld # # # # #\n", tamanho);
 
         for (j = 0; j < tamanho; j++)
             copiaVetor[j] = vetorOriginal[j];
 
-        int comparacoes = 0;
-        int trocas = 0;
+        long int comparacoes = 0;
+        long int trocas = 0;
         selectionSort(copiaVetor, tamanho, &comparacoes, &trocas);
         printf("SelectionSort:\n");
-        printf("Comparacoes: %d\n", comparacoes);
-        printf("Trocas: %d\n\n", trocas);
+        printf("Comparacoes: %ld\n", comparacoes);
+        printf("Trocas: %ld\n\n", trocas);
 
         for (j = 0; j < tamanho; j++)
             copiaVetor[j] = vetorOriginal[j];
@@ -229,8 +266,8 @@ int main() {
         trocas = 0;
         insertionSort(copiaVetor, tamanho, &comparacoes, &trocas);
         printf("InsertionSort:\n");
-        printf("Comparacoes: %d\n", comparacoes);
-        printf("Trocas: %d\n\n", trocas);
+        printf("Comparacoes: %ld\n", comparacoes);
+        printf("Trocas: %ld\n\n", trocas);
 
         for (j = 0; j < tamanho; j++)
             copiaVetor[j] = vetorOriginal[j];
@@ -239,8 +276,8 @@ int main() {
         trocas = 0;
         bubbleSort(copiaVetor, tamanho, &comparacoes, &trocas);
         printf("BubbleSort:\n");
-        printf("Comparacoes: %d\n", comparacoes);
-        printf("Trocas: %d\n\n", trocas);
+        printf("Comparacoes: %ld\n", comparacoes);
+        printf("Trocas: %ld\n\n", trocas);
 
         for (j = 0; j < tamanho; j++)
             copiaVetor[j] = vetorOriginal[j];
@@ -249,8 +286,8 @@ int main() {
         trocas = 0;
         shellSort(copiaVetor, tamanho, &comparacoes, &trocas);
         printf("ShellSort:\n");
-        printf("Comparacoes: %d\n", comparacoes);
-        printf("Trocas: %d\n\n", trocas);
+        printf("Comparacoes: %ld\n", comparacoes);
+        printf("Trocas: %ld\n\n", trocas);
 
         for (j = 0; j < tamanho; j++)
             copiaVetor[j] = vetorOriginal[j];
@@ -259,8 +296,8 @@ int main() {
         trocas = 0;
         quickSort(copiaVetor, 0, tamanho - 1, &comparacoes, &trocas);
         printf("QuickSort:\n");
-        printf("Comparacoes: %d\n", comparacoes);
-        printf("Trocas: %d\n\n", trocas);
+        printf("Comparacoes: %ld\n", comparacoes);
+        printf("Trocas: %ld\n\n", trocas);
 
         for (j = 0; j < tamanho; j++)
             copiaVetor[j] = vetorOriginal[j];
@@ -269,8 +306,8 @@ int main() {
         trocas = 0;
         heapSort(copiaVetor, tamanho, &comparacoes, &trocas);
         printf("HeapSort:\n");
-        printf("Comparacoes: %d\n", comparacoes);
-        printf("Trocas: %d\n\n", trocas);
+        printf("Comparacoes: %ld\n", comparacoes);
+        printf("Trocas: %ld\n\n", trocas);
 
         for (j = 0; j < tamanho; j++)
             copiaVetor[j] = vetorOriginal[j];
@@ -279,8 +316,8 @@ int main() {
         trocas = 0;
         mergeSort(copiaVetor, 0, tamanho - 1, &comparacoes, &trocas);
         printf("MergeSort:\n");
-        printf("Comparacoes: %d\n", comparacoes);
-        printf("Trocas: %d\n\n", trocas);
+        printf("Comparacoes: %ld\n", comparacoes);
+        printf("Trocas: %ld\n\n", trocas);
 
         free(vetorOriginal);
         free(copiaVetor);
